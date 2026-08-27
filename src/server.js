@@ -1,8 +1,10 @@
 const express = require('express');
+import {config} from 'dotenv'
 
 //import routes
 const movieRoutes = require("./routes/movieRoutes")
 
+config();
 const app = express();
 
 //API routes
