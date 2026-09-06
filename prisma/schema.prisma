@@ -14,13 +14,13 @@ datasource db {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  name           String
-  email          String          @unique
-  password       String
-  createdAt      DateTime        @default(now())
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
 
-  movies Movie[] @relation("MovieCreator")
+  movies         Movie[]         @relation("MovieCreator")
   watchlistItems WatchlistItem[]
 }
 
@@ -34,7 +34,7 @@ model Movie {
   posterUrl      String?
   createdBy      String
   createdAt      DateTime        @default(now())
-  creator User @relation("MovieCreator", fields:[createdBy], references:[id], onDelete:Cascade)
+  creator        User            @relation("MovieCreator", fields: [createdBy], references: [id], onDelete: Cascade)
   watchlistItems WatchlistItem[]
 }
 
@@ -49,8 +49,8 @@ model WatchlistItem {
   updatedAt DateTime        @default(now())
 
   //relationships
-  user  User  @relation(fields: [userId], references: [id], onDelete:Cascade)
-  movie Movie @relation(fields: [movieId], references: [id], onDelete :Cascade) // cascade mean if the movie is deleted, then all the watchlist items related to that movie will also be deleted
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade) // cascade mean if the movie is deleted, then all the watchlist items related to that movie will also be deleted
 }
 
 enum WatchlistStatus {
