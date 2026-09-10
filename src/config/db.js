@@ -1,44 +1,14 @@
 import "dotenv/config";
+import { PrismaClient } from "@prisma/client";
 
-import postgres from "@prisma/orm-postgres/runtime";
-import contractJson from "../prisma/contract.json" with { type: "json" };
-
-const isDevelopment = process.env.NODE_ENV === "development";
-
-const databaseLogger = {
-  name: "database-logger",
-  familyId: "sql",
-
-  async afterExecute(plan, result) {
-    const latency = Math.round(result.latencyMs);
-
-    if (!result.completed) {
-      console.error(
-        `[prisma:error] Query failed in ${latency}ms · ${plan.sql}`,
-      );
-      return;
-    }
-
-    if (isDevelopment) {
-      console.log(
-        `[prisma:query] ${result.rowCount} rows in ${latency}ms · ${plan.sql}`,
-      );
-    }
-  },
-};
-
-const db = postgres({
-  contractJson,
-  url: process.env.DATABASE_URL,
-  middleware: [databaseLogger],
-});
+const prisma = new PrismaClient();
 
 /**
  * Opens the PostgreSQL connection pool.
  */
 const connectDB = async () => {
   try {
-    await db.connect();
+    await prisma.$connect();
     console.log("DB connected via Prisma");
   } catch (error) {
     console.error("DB connection error:", error);
@@ -52,11 +22,11 @@ const connectDB = async () => {
  */
 const disconnectDB = async () => {
   try {
-    await db.close();
+    await prisma.$disconnect();
     console.log("DB disconnected via Prisma");
   } catch (error) {
     console.error("DB disconnection error:", error);
   }
 };
 
-export { db, connectDB, disconnectDB };
+export { prisma, connectDB, disconnectDB };
