@@ -52,6 +52,8 @@ model WatchlistItem {
   //relationships
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade) // cascade mean if the movie is deleted, then all the watchlist items related to that movie will also be deleted
+
+  @@unique([userId, movieId]) // This ensures that a user can only have one watchlist item per movie
 }
 
 enum WatchlistStatus {

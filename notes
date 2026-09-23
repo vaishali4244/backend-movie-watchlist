@@ -1,0 +1,6 @@
+migration command - npx prisma migrate dev --name added_other_tables
+
+//create script for seeding the database with initial data in package.json
+// "scripts": {
+//   "seed": "node prisma/seed.js"
+// }
