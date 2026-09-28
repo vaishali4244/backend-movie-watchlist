@@ -11,7 +11,7 @@ router.post("/", addToWatchlist);
 //delete movie by passing id in the the url
 router.delete("/:id", removeFromWatchlist);
 
-//update the watchlist
+//update the watchlist - {baseurl}/watchlist/:id
 router.put("/:id", updateFromWatchlist);
 
 export default router;
