@@ -22,7 +22,7 @@ app.use("/auth", authRoutes);
 app.use("/watchlist", watchlistRoutes);
 
 const PORT = 5001;
-app.listen(PORT, () =>  {
+const server = app.listen(process.env.PORT||5001, "0.0.0.0",() =>  {
   console.log(`server running on PORT ${PORT}`);
 });
 
